@@ -88,6 +88,24 @@ const RequestForm = () => {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
+
+        {/* Category Selection */}
+        <div>
+          <label className="block text-gray-700">Category</label>
+          <select
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
+            <option value="General">General</option>
+            <option value="Technical Support">Technical Support</option>
+            <option value="Logistics">Logistics</option>
+            <option value="HR">HR</option>
+          </select>
+        </div>
+
+        
         {/* Request Title - Item Name Dropdown */}
         <div>
           <label className="block text-gray-700">Item Name</label>
@@ -133,21 +151,7 @@ const RequestForm = () => {
           </select>
         </div>
 
-        {/* Category Selection */}
-        <div>
-          <label className="block text-gray-700">Category</label>
-          <select
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-          >
-            <option value="General">General</option>
-            <option value="Technical Support">Technical Support</option>
-            <option value="Logistics">Logistics</option>
-            <option value="HR">HR</option>
-          </select>
-        </div>
+        
 
         {/* Type Selection */}
         <div>

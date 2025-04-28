@@ -60,7 +60,9 @@ const StockManagement = () => {
                   <th>Quantity</th>
                   <th>Category</th>
                   <th>Status</th>
-                  <th>Action</th>
+                  {user && (user.role === "admin" || user.role === "LogisticsOfficer") && (
+                    <th>Action</th>
+                  )}
                 </tr>
               </thead>
               <tbody>

@@ -25,7 +25,7 @@ const SideBar = () => {
             </Link>
           </li>
 
-          {user && (user.role === "admin" || user.role === "LogisticsOfficer") && (
+          {user && (user.role === "Admin" || user.role === "LogisticsOfficer") && (
             <>
 
           <li className="mb-3">
@@ -59,7 +59,7 @@ const SideBar = () => {
             </Link>
           </li>
 
-          {user && (user.role === "admin" || user.role === "LogisticsOfficer") && (
+          {user && (user.role === "Admin" || user.role === "LogisticsOfficer") && (
             <>
           
           <li className="mb-3">
@@ -86,7 +86,7 @@ const SideBar = () => {
             </li>
             </>
           )}
-          {user && user.role === "admin" && (
+          {user && user.role === "Admin" && (
             <>
             <li className="mb-3">
               <Link to="/users" className="flex items-center space-x-2 p-2 w-full hover:bg-gray-700 rounded">

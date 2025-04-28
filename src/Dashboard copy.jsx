@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios'; 
+import axios from 'axios'; // Import axios
 import { FiHome, FiUser, FiSettings, FiLogOut } from "react-icons/fi";
 import SideBar from "./components/SideBar";
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [logs, setLogs] = useState([]); // State to store the logs
-  const [stats, setStats] = useState(null); // State to store the request statistics
   const navigate = useNavigate();
 
-  // Fetch logs and statistics from the API
+  // Simulated static data
+  const stats = [
+    { title: "Total Orders", value: 120, color: "bg-blue-500" },
+    { title: "Pending Requests", value: 8, color: "bg-yellow-500" },
+    { title: "Completed Deliveries", value: 95, color: "bg-green-500" },
+    { title: "Total Users", value: 500, color: "bg-purple-500" },
+  ];
+
+  // Fetch logs from the API
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (!storedUser) {
@@ -33,22 +40,7 @@ const Dashboard = () => {
       }
     };
 
-    // Fetch statistics from the API
-    const fetchStats = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:5000/api/request/statistics", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setStats(response.data); // Set stats in the state directly from the response
-        console.log(response.data); // Log the response data for debugging
-      } catch (error) {
-        console.error("Error fetching stats:", error);
-      }
-    };
-
     fetchLogs();
-    fetchStats();
   }, [navigate]);
 
   const handleLogout = () => {
@@ -72,37 +64,15 @@ const Dashboard = () => {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
-          {stats ? (
-            <>
-              <div className="bg-blue-500 text-white p-5 rounded-lg shadow-md">
-                <h2 className="text-lg font-semibold">Total Requests</h2>
-                <p className="text-3xl font-bold mt-2">{stats.totalRequests}</p>
-              </div>
-
-              {stats.statusCounts.map((stat, index) => {
-                // Dynamically determine background color based on stat.status
-                let bgColor = 'bg-green-500'; // Default color
-                if (stat.status === "under-repair") {
-                  bgColor = 'bg-red-400'; // If status is under-repair
-                } else if (stat.status === "pending") {
-                  bgColor = 'bg-yellow-500'; // If status is pending
-                } else if (stat.status === "damaged") {
-                  bgColor = 'bg-red-500'; // If status is pending
-                } else if (stat.status === "denied") {
-                  bgColor = 'bg-cyan-500'; // If status is pending
-                }
-                
-                return (
-                <div key={index} className={`${bgColor} text-white p-5 rounded-lg shadow-md`}>
-                  <h2 className="text-lg font-semibold">{stat.status}</h2>
-                  <p className="text-3xl font-bold mt-2">{stat.count}</p>
-                </div>
-                );
-            })}
-            </>
-          ) : (
-            <div className="col-span-4 text-center p-5 text-gray-600">Loading stats...</div>
-          )}
+          {stats.map((stat, index) => (
+            <div
+              key={index}
+              className={`${stat.color} text-white p-5 rounded-lg shadow-md`}
+            >
+              <h2 className="text-lg font-semibold">{stat.title}</h2>
+              <p className="text-3xl font-bold mt-2">{stat.value}</p>
+            </div>
+          ))}
         </div>
 
         {/* Recent Activity */}
